@@ -12,7 +12,7 @@ More specifically, it saves the following information:
 - **Upload date**
 - **Category**
 
-The downloaded userbars get saved in a separate "userbars/" folder.
+The downloaded userbars get saved in a separate *userbars/* folder.
 
 ## Dependencies
 
