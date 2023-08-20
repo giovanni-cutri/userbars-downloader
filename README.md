@@ -1,5 +1,3 @@
-![Socialify](https://github.com/giovanni-cutri/userbars-downloader/blob/main/resources/socialify-logo.png)
-
 # userbars-downloader
  
 This script downloads every userbar from the website *www.userbars.be* and generates a JSON file with the metadata associated to it.
