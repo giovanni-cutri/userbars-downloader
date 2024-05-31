@@ -19,7 +19,7 @@ The *userbars-name.py* saves information about the userbars on the website *www.
 Most of the userbars are hosted on Imgur and downloading them with Python is not easy. Therefore, it is recommended to download them using [gallery-dl](https://github.com/mikf/gallery-dl), feeding it with the output text file like this:
 
 ````
-gallery-dl -i userbars-be.txt
+gallery-dl -i userbars-name.txt
 
 ````
 
