@@ -30,12 +30,12 @@ def save_userbars():
         res = requests.get(category_url, allow_redirects=False, verify=False)
         soup = bs4.BeautifulSoup(res.text, "lxml")
         category = soup.select("span.title")[0].getText()
-        print(f"Downloading category {category}...")
+        print(f"Downloading category {category} ({str(i)}/20) ...")
         last_page_element = soup.select("a.paging")[-1]
         num_pages = int(last_page_element.attrs["href"].split("?page=")[-1])
         
         for n in range(1, num_pages + 1):
-            print(f"Downloading page {n}...")
+            print(f"Downloading page {n}/{num_pages} of category {category} ({str(i)}/20) ...")
             page_urls = get_page_urls(category_url + f"?page={n}")
             userbars_urls.extend(page_urls)
     download_userbars(userbars_urls)
@@ -93,18 +93,15 @@ def download_userbars(urls):
 
         if not os.path.exists("userbars-name/data"):
             os.makedirs("userbars-name/data")
-        
-        res_imgur = requests.get(image_imgur_url, allow_redirects=False, headers = {'User-agent': 'your bot 0.1'})
-        ext = image_imgur_url.split(".")[-1]  # gets file extension
 
-        save_path = "userbars-name/" + id + "." + ext
 
 def write_data():
+    print("Writing data...")
     with open('userbars-name/data/userbars-name.json', 'w') as outfile:
         json.dump(userbars_dict, outfile, indent=4)
 
     # downloading images from Imgur is not easy, so we save the URLs to a text file and use other tools, like gallery-dl, to save them
-    with open("userbars-name/data/userbars-name.txt", "w") as f:
+    with open("userbars-name/data/imgur-urls.txt", "w") as f:
         for userbar in userbars_dict["userbars"]:
             f.write(userbar["imgur_url"] + "\n")
 
