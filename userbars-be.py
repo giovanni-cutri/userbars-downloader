@@ -83,16 +83,16 @@ def get_data(i, res):
     userbars_dict["userbars"].append(data)
 
 def download(i, res):
-    if not os.path.exists("userbars/"):
-        os.mkdir("userbars/")
+    if not os.path.exists("userbars-be/data"):
+        os.makedirs("userbars-be/data")
     ext = res.headers['content-type'].split("/")[-1]  # gets file extension
     if ext == 'x-ms-bmp':   # clean .bmp extension
         ext = 'bmp'
-    save_path = "userbars/" + str(i) + "." + ext
+    save_path = "userbars-be/" + str(i) + "." + ext
     open(save_path, 'wb').write(res.content)
 
 def write_data():
-    with open('userbars.json', 'w') as outfile:
+    with open('userbars-be/userbars-be.json', 'w') as outfile:
         json.dump(userbars_dict, outfile, indent=4)
 
 if __name__ == "__main__":
