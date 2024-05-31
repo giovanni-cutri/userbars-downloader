@@ -25,3 +25,7 @@ pip install -r requirements.txt
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/giovanni-cutri/userbars-downloader/blob/main/LICENSE) file for details.
+
+
+# Update
+As of [June 2023](https://cohost.org/andrewelmore/post/1668013-r-i-p-userbars-be), the website is down.
