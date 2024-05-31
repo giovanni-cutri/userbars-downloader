@@ -58,6 +58,7 @@ def get_page_urls(url):
 
 
 def download_userbars(urls):
+    print("Getting data...")
     for url in urls:
         res = requests.get(url, allow_redirects=False, verify=False)
         soup = bs4.BeautifulSoup(res.text, "lxml")
