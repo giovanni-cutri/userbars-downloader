@@ -1,6 +1,6 @@
-# userbars-downloader
+# userbars-be
  
-This script downloads every userbar from the website *www.userbars.be* and generates a JSON file with the metadata associated to it.
+The *userbars-be.py* file downloads every userbar from the website *www.userbars.be* and generates a JSON file with the metadata associated to it.
 
 More specifically, it saves the following information:
 - **Userbar unique number**
@@ -10,7 +10,18 @@ More specifically, it saves the following information:
 - **Upload date**
 - **Category**
 
-The downloaded userbars get saved in a separate *userbars/* folder.
+The downloaded userbars get saved in a *userbars-be/* folder.
+
+# userbars-name
+
+The *userbars-name.py* saves information about the userbars on the website *www.userbars.name* and generates a JSON file with the metadata associated to them, saving it in a *userbars-name/data* folder, as well as a text file with the URLs of the userbars.
+
+Most of the userbars are hosted on Imgur and downloading them with Python is not easy. Therefore, it is recommended to download them using [gallery-dl](https://github.com/mikf/gallery-dl), feeding it with the output text file like this:
+
+````
+gallery-dl -i userbars-be.txt
+
+````
 
 ## Dependencies
 
