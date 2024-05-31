@@ -104,7 +104,7 @@ def write_data():
         json.dump(userbars_dict, outfile, indent=4)
 
     # downloading images from Imgur is not easy, so we save the URLs to a text file and use other tools, like gallery-dl, to save them
-    with open("userbars-name/data/imgur-urls.txt", "w") as f:
+    with open("userbars-name/data/userbars-name.txt", "w") as f:
         for userbar in userbars_dict["userbars"]:
             f.write(userbar["imgur_url"] + "\n")
 
