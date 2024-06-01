@@ -27,7 +27,7 @@ def save_userbars():
 
     userbars_urls = []
 
-    for i in range(1,21):
+    for i in range(1,2):
         category_url = base_url + f"cat{str(i)}.html"
         res = requests.get(category_url, allow_redirects=False, verify=False)
         soup = bs4.BeautifulSoup(res.text, "lxml", from_encoding="utf-8")
@@ -36,10 +36,15 @@ def save_userbars():
         last_page_element = soup.select("a.paging")[-1]
         num_pages = int(last_page_element.attrs["href"].split("?page=")[-1])
         
-        for n in range(1, num_pages + 1):
+        for n in range(1,2):
             print(f"Downloading page {n}/{num_pages} of category {category} ({str(i)}/20) ...")
             page_urls = get_page_urls(category_url + f"?page={n}")
             userbars_urls.extend(page_urls)
+
+    with open("userbars-name/data/userbars-urls.txt", "w") as f:
+        for userbar_url in userbars_urls:
+            f.write(userbar_url + "\n")
+
     download_userbars(userbars_urls)
 
 
