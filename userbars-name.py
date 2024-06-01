@@ -18,6 +18,8 @@ userbars_dict = dict(userbars = [])
 download_url = ""
 
 def main():
+    if not os.path.exists("userbars-name/data"):
+        os.makedirs("userbars-name/data")
     save_userbars()
 
 
@@ -28,7 +30,7 @@ def save_userbars():
     for i in range(1,21):
         category_url = base_url + f"cat{str(i)}.html"
         res = requests.get(category_url, allow_redirects=False, verify=False)
-        soup = bs4.BeautifulSoup(res.text, "lxml")
+        soup = bs4.BeautifulSoup(res.text, "lxml", from_encoding="utf-8")
         category = soup.select("span.title")[0].getText()
         print(f"Downloading category {category} ({str(i)}/20) ...")
         last_page_element = soup.select("a.paging")[-1]
@@ -39,12 +41,11 @@ def save_userbars():
             page_urls = get_page_urls(category_url + f"?page={n}")
             userbars_urls.extend(page_urls)
     download_userbars(userbars_urls)
-    write_data()
 
 
 def get_page_urls(url):
     res = requests.get(url, allow_redirects=False, verify=False)
-    soup = bs4.BeautifulSoup(res.text, "lxml")
+    soup = bs4.BeautifulSoup(res.text, "lxml", from_encoding="utf-8")
     anchor_elements = soup.select("a")
     page_urls = []
 
@@ -63,7 +64,7 @@ def download_userbars(urls):
     for url in urls:
         print(f"Getting data (Userbar {counter}/{total}) ...")
         res = requests.get(url, allow_redirects=False, verify=False)
-        soup = bs4.BeautifulSoup(res.text, "lxml")
+        soup = bs4.BeautifulSoup(res.text, "lxml", from_encoding="utf-8")
 
         id = url.split(".name/")[-1].split(".html")[0]
 
@@ -94,15 +95,14 @@ def download_userbars(urls):
 
         userbars_dict["userbars"].append(data)
 
+        write_data()
+        
         counter = counter + 1
 
 
 def write_data():
-    if not os.path.exists("userbars-name/data"):
-        os.makedirs("userbars-name/data")
-    print("Writing data...")
-    with open('userbars-name/data/userbars-name.json', 'w') as outfile:
-        json.dump(userbars_dict, outfile, indent=4)
+    with open("userbars-name/data/userbars-name.json", "w", encoding="utf-8") as outfile:
+        json.dump(userbars_dict, outfile, indent=4, ensure_ascii=False)
 
     # downloading images from Imgur is not easy, so we save the URLs to a text file and use other tools, like gallery-dl, to save them
     with open("userbars-name/data/imgur-urls.txt", "w") as f:
