@@ -58,8 +58,10 @@ def get_page_urls(url):
 
 
 def download_userbars(urls):
-    print("Getting data...")
+    counter = 1
+    total = len(urls)
     for url in urls:
+        print(f"Getting data (Userbar {counter}/{total}) ...")
         res = requests.get(url, allow_redirects=False, verify=False)
         soup = bs4.BeautifulSoup(res.text, "lxml")
 
@@ -92,11 +94,12 @@ def download_userbars(urls):
 
         userbars_dict["userbars"].append(data)
 
-        if not os.path.exists("userbars-name/data"):
-            os.makedirs("userbars-name/data")
+        counter = counter + 1
 
 
 def write_data():
+    if not os.path.exists("userbars-name/data"):
+        os.makedirs("userbars-name/data")
     print("Writing data...")
     with open('userbars-name/data/userbars-name.json', 'w') as outfile:
         json.dump(userbars_dict, outfile, indent=4)
