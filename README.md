@@ -1,6 +1,6 @@
 # userbars-downloader
  
-The *userbars-be.py* and *userbars-name.py* files download every userbar from the websites *www.userbars.be* and *www.userbars.name*, respectively; they generate two separate JSON files with the metadata associated to the userbars.
+The *userbars-be.py* and *userbars-name.py* scripts download every userbar from the websites *www.userbars.be* and *www.userbars.name*, respectively; they generate two separate JSON files with the metadata associated to the userbars.
 
 More specifically, the following information is saved:
 - **Userbar unique identifier (id)**
