@@ -45,7 +45,7 @@ def save_userbars():
         for userbar_url in userbars_urls:
             f.write(userbar_url + "\n")
 
-    download_userbars(userbars_urls)
+    download_userbars()
 
 
 def get_page_urls(url):
@@ -63,7 +63,18 @@ def get_page_urls(url):
     return page_urls
 
 
-def download_userbars(urls):
+def download_userbars():
+
+    with open("userbars-name/data/userbars-urls.txt", "r") as file:
+        urls = [line.rstrip() for line in file]
+
+    # in case the script stops for connection issues and you wish to restart from where it left off:
+    # with open("userbars-name/data/userbars-name.json", "r", encoding='utf-8') as file:
+        # userbars_dict = json.load(file)
+    # counter = len(os.listdir(os.getcwd()))
+    # total = len(urls)
+    # for url in urls[counter-1:]
+
     counter = 1
     total = len(urls)
     for url in urls:
@@ -77,12 +88,6 @@ def download_userbars(urls):
         
         image_path = soup.select("img[src*='./data/']")[0].attrs["src"][2:]
         image_url = base_url + image_path
-        image_share_url = base_url + f"sendpic_en.php?url=/{image_path}"
-
-        res_share = requests.get(image_share_url, allow_redirects=False, verify=False)
-        soup_share = bs4.BeautifulSoup(res_share.text)
-
-        image_imgur_url = soup_share.select("img")[0].attrs["src"]
         
         category = html.unescape(soup.select("a.clickstream")[-1].getText())
         date = parser.parse(soup.select("td.row1[valign='top']")[3].getText()).isoformat()
@@ -92,27 +97,24 @@ def download_userbars(urls):
             "id": id,
             "title": title,
             "url": image_url,
-            "imgur_url": image_imgur_url,
             "category": category,
             "date": date,
             "uploader": uploader
         }
-
+  
         userbars_dict["userbars"].append(data)
 
-        write_data()
+        ext = image_path.split(".")[-1]
+        save_path = f"userbars-name/{id}.{ext}"
+        urllib.request.urlretrieve(image_url, save_path)
+        write_data(userbars_dict)
         
         counter = counter + 1
 
 
-def write_data():
+def write_data(userbars_dict):
     with open("userbars-name/data/userbars-name.json", "w", encoding="utf-8") as outfile:
         json.dump(userbars_dict, outfile, indent=4, ensure_ascii=False)
-
-    # downloading images from Imgur is not easy, so we save the URLs to a text file and use other tools, like gallery-dl, to save them
-    with open("userbars-name/data/imgur-urls.txt", "w") as f:
-        for userbar in userbars_dict["userbars"]:
-            f.write(userbar["imgur_url"] + "\n")
 
 
 if __name__ == "__main__":
