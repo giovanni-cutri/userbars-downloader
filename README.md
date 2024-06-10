@@ -29,3 +29,5 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 # Update
 As of [June 2023](https://cohost.org/andrewelmore/post/1668013-r-i-p-userbars-be), the website *www.userbars.be* is down; therefore, the userbars cannot be downloaded anymore.
+
+However, you can still retrieve the userbars that were saved into the Waybak Machine: to that purpose, I recommend [this](https://github.com/ShiftaDeband/wayback-machine-downloader) tool.
